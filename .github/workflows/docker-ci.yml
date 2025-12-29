@@ -1,8 +1,8 @@
-﻿name: Docker CI
+name: Docker CI with Security
 
 on:
   push:
-    branches: [ ""master"" ]
+    branches: [ "master" ]
 
 jobs:
   docker:
@@ -15,5 +15,11 @@ jobs:
       - name: Build Docker image
         run: docker build -t my-web-app .
 
-      - name: CI finished
-        run: echo ""Docker image built successfully""
+      - name: Trivy security scan
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: my-web-app
+          severity: HIGH,CRITICAL
+
+      - name: Pipeline finished
+        run: echo "CI/CD + Security completed"
