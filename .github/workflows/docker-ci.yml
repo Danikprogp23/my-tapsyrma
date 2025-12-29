@@ -1,0 +1,19 @@
+﻿name: Docker CI
+
+on:
+  push:
+    branches: [ ""master"" ]
+
+jobs:
+  docker:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Build Docker image
+        run: docker build -t my-web-app .
+
+      - name: CI finished
+        run: echo ""Docker image built successfully""
